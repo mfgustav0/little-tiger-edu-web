@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { questions } from "@/lib/questions"
+import { Category, categoryList, questions } from "@/lib/questions"
 import { gameStore } from "@/lib/game-store"
 import { Dices, HelpCircle, BookOpen, Coins } from "lucide-react"
 import { BottomNav } from "@/components/bottom-nav"
+import { CoinsDisplay } from "@/components/coins-display"
+import { Header } from "@/components/header"
 
 type SlotSymbol = "dice" | "question" | "book"
 type GameState = "idle" | "spinning" | "question" | "result"
@@ -33,7 +35,7 @@ export default function GamePage() {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [showExplanation, setShowExplanation] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
-  const [activeCategories, setActiveCategories] = useState<string[]>(["Matemática", "História"])
+  const [activeCategories, setActiveCategories] = useState<Category[]>([...categoryList])
   const [showConfetti, setShowConfetti] = useState(false)
   const [shakeCard, setShakeCard] = useState(false)
 
@@ -139,7 +141,7 @@ export default function GamePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4 pb-28">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4 pb-28">
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
           {[...Array(30)].map((_, i) => (
@@ -168,26 +170,13 @@ export default function GamePage() {
 
       {/* Header */}
       <div className="max-w-md mx-auto mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-2xl">🐯</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-balance">Tigrinho Edu</h1>
-              <p className="text-xs text-blue-200">Matemática & História</p>
-            </div>
-          </div>
-        </div>
+        <Header
+          title="Tigrinho Edu"
+          description="Game divertido"
+          iconClass="bg-linear-to-br from-amber-400 to-orange-500"
+        />
 
-        {/* Coins Display */}
-        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Coins className="w-5 h-5 text-amber-400" />
-            <span className="text-sm text-slate-400">Moedas</span>
-          </div>
-          <span className="text-2xl font-bold text-amber-400">{coins}</span>
-        </div>
+        <CoinsDisplay coins={coins} />
 
         {(skipQuantity > 0 || doubleCoinsQuantity > 0) && (
           <div className="mt-3 flex gap-2">
@@ -216,49 +205,74 @@ export default function GamePage() {
       <div className="max-w-md mx-auto space-y-4">
         {/* Slot Machine */}
         {gameState !== "question" && (
-          <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-6">
-            <div className="text-center mb-4">
-              <h2 className="text-lg font-semibold mb-1">Máquina do Tigrinho</h2>
-              <p className="text-sm text-blue-300">Gire e responda perguntas!</p>
-            </div>
+          <>
+            <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-6">
+              <div className="text-center mb-4">
+                <h2 className="text-lg font-semibold mb-1 text-white">Máquina do Estudo</h2>
+                <p className="text-sm text-blue-300">Gire e responda perguntas!</p>
+              </div>
 
-            {/* Slots */}
-            <div className="flex justify-center gap-3 mb-6">
-              {slots.map((symbol, index) => (
-                <div
-                  key={index}
-                  className="w-24 h-24 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl border-2 border-amber-500/50 flex items-center justify-center shadow-xl"
-                >
-                  <div className={gameState === "spinning" ? "animate-bounce" : ""}>
-                    <SymbolIcon symbol={symbol} isSpinning={gameState === "spinning"} />
+              {/* Slots */}
+              <div className="flex justify-center gap-3 mb-6">
+                {slots.map((symbol, index) => (
+                  <div
+                    key={index}
+                    className="w-24 h-24 bg-linear-to-br from-slate-700 to-slate-800 rounded-2xl border-2 border-amber-500/50 flex items-center justify-center shadow-xl"
+                  >
+                    <div className={gameState === "spinning" ? "animate-bounce" : ""}>
+                      <SymbolIcon symbol={symbol} isSpinning={gameState === "spinning"} />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            {/* Spin Buttons */}
-            <div className="flex gap-3 mb-4">
-              <Button
-                onClick={() => handleSpin(1)}
-                disabled={gameState === "spinning" || coins < 1}
-                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-6 text-base shadow-lg disabled:opacity-50"
-              >
-                Girar (1 moeda)
-              </Button>
-              <Button
-                onClick={() => handleSpin(2)}
-                disabled={gameState === "spinning" || coins < 2}
-                variant="outline"
-                className="flex-1 border-2 border-blue-400 text-blue-300 hover:bg-blue-500/20 font-bold py-6 text-base"
-              >
-                Dica (2 moedas)
-              </Button>
-            </div>
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={() => handleSpin(1)}
+                  disabled={gameState === "spinning" || coins < 1}
+                  className="flex-1 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 text-base shadow-lg disabled:opacity-50"
+                >
+                  Girar (1 moeda)
+                </Button>
 
-            <Button onClick={handleReset} variant="ghost" className="w-full text-slate-400 hover:text-white">
-              Resetar
-            </Button>
-          </Card>
+                <Button onClick={handleReset} variant="outline" className="w-full hover:text-white hover:bg-white/30 py-4">
+                  Resetar Pontos
+                </Button>
+              </div>
+            </Card>
+            
+            <Card className="bg-blue-500/10 border-blue-500/30 backdrop-blur-sm p-4">
+              <p className="text-sm text-blue-200 leading-relaxed">
+                💡 <span className="font-semibold">Dica:</span> Ganhe mais moedas respondendo perguntas corretamente no
+                jogo. Cada acerto vale +3 moedas!
+              </p>
+            </Card>
+            
+            <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
+              <h3 className="font-bold mb-3 text-white">Categorias Ativas</h3>
+              <div className="flex flex-wrap gap-2">
+                {categoryList.map((category: Category, index: number) => (
+                  <button
+                    key={`category-${index}`}
+                    onClick={() => {
+                      if (activeCategories.includes(category)) {
+                        if (activeCategories.length > 1) {
+                          setActiveCategories(activeCategories.filter((c) => c !== category))
+                        }
+                      } else {
+                        setActiveCategories([...activeCategories, category])
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                      activeCategories.includes(category) ? "bg-blue-500 text-white" : "bg-slate-700 text-slate-400"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </Card>
+          </>
         )}
 
         {/* Question Card */}
@@ -334,7 +348,7 @@ export default function GamePage() {
                   <Button
                     onClick={handleAnswer}
                     disabled={selectedAnswer === null}
-                    className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-6 disabled:opacity-50"
+                    className="flex-1 bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-6 disabled:opacity-50"
                   >
                     Confirmar resposta
                   </Button>
@@ -360,7 +374,7 @@ export default function GamePage() {
               ) : (
                 <Button
                   onClick={handleContinue}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-6"
+                  className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-6"
                 >
                   Continuar
                 </Button>
@@ -368,32 +382,6 @@ export default function GamePage() {
             </div>
           </Card>
         )}
-
-        {/* Categories Card */}
-        <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
-          <h3 className="font-bold mb-3">Categorias Ativas</h3>
-          <div className="flex flex-wrap gap-2">
-            {["Matemática", "História"].map((category) => (
-              <button
-                key={category}
-                onClick={() => {
-                  if (activeCategories.includes(category)) {
-                    if (activeCategories.length > 1) {
-                      setActiveCategories(activeCategories.filter((c) => c !== category))
-                    }
-                  } else {
-                    setActiveCategories([...activeCategories, category])
-                  }
-                }}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeCategories.includes(category) ? "bg-blue-500 text-white" : "bg-slate-700 text-slate-400"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </Card>
       </div>
 
       {/* Bottom Navigation */}

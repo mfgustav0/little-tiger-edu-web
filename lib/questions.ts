@@ -1,7 +1,17 @@
+export enum Category {
+  Matematica = "Matemática",
+  Historia = "História"
+}
+
+export const categoryList = [
+  Category.Matematica,
+  Category.Historia
+]
+
 export const questions = [
   {
     id: "m1",
-    category: "Matemática",
+    category: Category.Matematica,
     q: "Qual é o valor de 7 × 8?",
     options: ["54", "56", "63", "49"],
     answer: 1,
@@ -9,7 +19,7 @@ export const questions = [
   },
   {
     id: "m2",
-    category: "Matemática",
+    category: Category.Matematica,
     q: "Se um triângulo tem lados 3, 4 e 5, ele é:",
     options: ["Equilátero", "Isósceles", "Retângulo", "Escaleno"],
     answer: 2,
@@ -17,7 +27,7 @@ export const questions = [
   },
   {
     id: "m3",
-    category: "Matemática",
+    category: Category.Matematica,
     q: "Qual é a média aritmética de 4, 8 e 10?",
     options: ["6", "7,33", "22", "8"],
     answer: 1,
@@ -25,7 +35,7 @@ export const questions = [
   },
   {
     id: "m4",
-    category: "Matemática",
+    category: Category.Matematica,
     q: "Resolva: 12 ÷ 3 + 4 = ?",
     options: ["8", "12", "0", "-"],
     answer: 0,
@@ -33,7 +43,7 @@ export const questions = [
   },
   {
     id: "m5",
-    category: "Matemática",
+    category: Category.Matematica,
     q: "Qual o próximo número na sequência: 2, 4, 8, 16, ... ?",
     options: ["24", "32", "20", "18"],
     answer: 1,
@@ -42,7 +52,7 @@ export const questions = [
 
   {
     id: "h1",
-    category: "História",
+    category: Category.Historia,
     q: "Em que ano ocorreu a Independência do Brasil?",
     options: ["1822", "1889", "1808", "1815"],
     answer: 0,
@@ -50,7 +60,7 @@ export const questions = [
   },
   {
     id: "h2",
-    category: "História",
+    category: Category.Historia,
     q: "Quem foi figura central do Período do Terror na Revolução Francesa?",
     options: ["Napoleão Bonaparte", "Maximilien Robespierre", "Luís XVI", "Voltaire"],
     answer: 1,
@@ -58,7 +68,7 @@ export const questions = [
   },
   {
     id: "h3",
-    category: "História",
+    category: Category.Historia,
     q: "Qual civilização construiu as pirâmides de Gizé?",
     options: ["Maias", "Egípcios", "Espanhóis", "Sumérios"],
     answer: 1,
@@ -66,7 +76,7 @@ export const questions = [
   },
   {
     id: "h4",
-    category: "História",
+    category: Category.Historia,
     q: "A Primeira Guerra Mundial começou em que ano?",
     options: ["1914", "1939", "1905", "1918"],
     answer: 0,
@@ -74,7 +84,7 @@ export const questions = [
   },
   {
     id: "h5",
-    category: "História",
+    category: Category.Historia,
     q: "Quem proclamou a República no Brasil em 1889?",
     options: ["Deodoro da Fonseca", "Dom Pedro II", "Getúlio Vargas", "Floriano Peixoto"],
     answer: 0,

@@ -14,8 +14,8 @@ type GameData = {
 
 const DEFAULT_DATA: GameData = {
   coins: 14,
-  correctAnswers: 3,
-  wrongAnswers: 1,
+  correctAnswers: 0,
+  wrongAnswers: 0,
   powerUps: [],
   purchasedThemes: [],
   activeTheme: "default",

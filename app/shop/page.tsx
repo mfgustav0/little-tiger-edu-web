@@ -8,6 +8,8 @@ import { Card } from "@/components/ui/card"
 import { gameStore } from "@/lib/game-store"
 import { Sparkles, SkipForward, Palette, Coins } from "lucide-react"
 import { BottomNav } from "@/components/bottom-nav"
+import { CoinsDisplay } from "@/components/coins-display"
+import { Header } from "@/components/header"
 
 type ShopItem = {
   id: string
@@ -101,27 +103,16 @@ export default function ShopPage() {
   const getPowerUpQuantity = (itemId: string) => powerUps[itemId] || 0
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4 pb-28">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4 pb-28">
       {/* Header */}
       <div className="max-w-md mx-auto mb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold">Loja do Tigrinho</h1>
-            <p className="text-xs text-blue-200">Use suas moedas aqui</p>
-          </div>
-        </div>
-
-        {/* Coins Display */}
-        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Coins className="w-6 h-6 text-amber-400" />
-            <span className="text-sm text-slate-400">Suas Moedas</span>
-          </div>
-          <span className="text-3xl font-bold text-amber-400">{coins}</span>
-        </div>
+        <Header 
+          title='Loja do Tigrinho'
+          description='Use suas moedas aqui'
+          iconClass="bg-linear-to-br from-amber-400 to-orange-500"
+        />
+        
+        <CoinsDisplay coins={coins} />
       </div>
 
       {/* Shop Items */}
@@ -139,7 +130,7 @@ export default function ShopPage() {
               return (
                 <Card key={item.id} className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-amber-500/30">
+                    <div className="w-12 h-12 bg-linear-to-br from-amber-500/20 to-orange-500/20 rounded-xl flex items-center justify-center shrink-0 border border-amber-500/30">
                       {item.icon}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -157,7 +148,7 @@ export default function ShopPage() {
                         disabled={!canAfford(item.cost)}
                         className={`w-full ${
                           canAfford(item.cost)
-                            ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+                            ? "bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
                             : "bg-slate-700 text-slate-500"
                         }`}
                       >
@@ -182,7 +173,7 @@ export default function ShopPage() {
             {SHOP_ITEMS.filter((item) => item.category === "cosmetic").map((item) => (
               <Card key={item.id} className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-blue-500/30">
+                  <div className="w-12 h-12 bg-linear-to-br from-blue-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center shrink-0 border border-blue-500/30">
                     {item.icon}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -195,7 +186,7 @@ export default function ShopPage() {
                         isPurchased(item)
                           ? "bg-green-500/20 text-green-400 border border-green-500/50"
                           : canAfford(item.cost)
-                            ? "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+                            ? "bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
                             : "bg-slate-700 text-slate-500"
                       }`}
                     >
