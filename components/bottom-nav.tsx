@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Gamepad2, ShoppingBag, BarChart3 } from "lucide-react"
+import { Gamepad2, BarChart3, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
