@@ -1,10 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { TrendingUp, Target, Zap, Award } from "lucide-react"
-import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
 import { gameStore } from "@/lib/game-store"
 
@@ -174,13 +172,6 @@ export default function StatsPage() {
             </div>
           </div>
         </Card>
-
-        {/* Action Button */}
-        <Link href="/game">
-          <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-6 text-base shadow-lg">
-            Voltar ao Jogo
-          </Button>
-        </Link>
       </div>
 
       {/* Bottom Navigation */}

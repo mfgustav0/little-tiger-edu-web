@@ -8,7 +8,6 @@ export function BottomNav() {
   const pathname = usePathname()
 
   const navItems = [
-    { href: "/", icon: Home, label: "Início" },
     { href: "/game", icon: Gamepad2, label: "Jogar" },
     { href: "/shop", icon: ShoppingBag, label: "Loja" },
     { href: "/stats", icon: BarChart3, label: "Stats" },

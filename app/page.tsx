@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Sparkles, BookOpen, Brain, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { BottomNav } from "@/components/bottom-nav"
 
 export default function HomePage() {
   return (
@@ -79,7 +78,6 @@ export default function HomePage() {
           </p>
         </div>
       </div>
-      <BottomNav />
     </div>
   )
 }
