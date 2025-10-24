@@ -1,11 +1,13 @@
 export enum Category {
   Matematica = "Matemática",
-  Historia = "História"
+  Historia = "História",
+  Biologia = "Biologia"
 }
 
 export const categoryList = [
   Category.Matematica,
-  Category.Historia
+  Category.Historia,
+  Category.Biologia
 ]
 
 export const questions = [
@@ -90,4 +92,44 @@ export const questions = [
     answer: 0,
     explain: "Marechal Deodoro da Fonseca, em 15/11/1889.",
   },
+  { 
+    id: "b1",
+    category: Category.Biologia,
+    q: "Qual é o maior órgão do corpo humano?",
+    options: ["Coração", "Fígado", "Pele", "Pulmão"],
+    answer: 2,
+    explain: "A pele é o maior órgão do corpo humano, com uma área média de 2 metros quadrados em um adulto.",
+  },
+  { 
+    id: "b2",
+    category: Category.Biologia,
+    q: "O que é a fotossíntese?",
+    options: ["Processo de respiração celular", "Transformação de luz em energia", "Processo de digestão de alimentos", "Conversão de oxigênio em dióxido de carbono"],
+    answer: 1,
+    explain: "A fotossíntese é o processo pelo qual as plantas convertem a luz solar em energia, usando dióxido de carbono e água.",
+  },
+  { 
+    id: "b3",
+    category: Category.Biologia,
+    q: "O que são os cromossomos?",
+    options: ["Células do sangue", "Estruturas que carregam o material genético", "Órgãos do sistema respiratório", "Partes do sistema nervoso"],
+    answer: 1,
+    explain: "Cromossomos são estruturas localizadas no núcleo das células que contêm o material genético (DNA).",
+  },
+  { 
+    id: "b4",
+    category: Category.Biologia,
+    q: "Qual é a função dos ribossomos?",
+    options: ["Produção de energia", "Síntese de proteínas", "Armazenamento de DNA", "Transporte de nutrientes"],
+    answer: 1,
+    explain: "Os ribossomos são responsáveis pela síntese de proteínas, traduzindo o RNA mensageiro em sequências de aminoácidos.",
+  },
+  { 
+    id: "b5",
+    category: Category.Biologia,
+    q: "Qual é a principal função do sistema circulatório?",
+    options: ["Filtrar toxinas", "Transportar oxigênio e nutrientes", "Armazenar energia", "Regular a temperatura do corpo"],
+    answer: 1,
+    explain: "O sistema circulatório transporta oxigênio, nutrientes, hormônios e resíduos metabólicos por todo o corpo.",
+  }
 ]
