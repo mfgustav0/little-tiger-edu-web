@@ -61,7 +61,6 @@ export default function StatsPage() {
         <Header
           title="Estatísticas"
           description="Seu progresso detalhado"
-          iconClass="bg-linear-to-br from-blue-400 to-cyan-500"
         />
       </div>
 

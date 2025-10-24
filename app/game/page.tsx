@@ -173,7 +173,6 @@ export default function GamePage() {
         <Header
           title="Tigrinho Edu"
           description="Game divertido"
-          iconClass="bg-linear-to-br from-amber-400 to-orange-500"
         />
 
         <CoinsDisplay coins={coins} />
@@ -217,7 +216,7 @@ export default function GamePage() {
                 {slots.map((symbol, index) => (
                   <div
                     key={index}
-                    className="w-24 h-24 bg-linear-to-br from-slate-700 to-slate-800 rounded-2xl border-2 border-amber-500/50 flex items-center justify-center shadow-xl"
+                    className="w-24 h-24 bg-linear-to-br to-slate-800 rounded-2xl border-2 border-amber-500/50 flex items-center justify-center shadow-xl text-white"
                   >
                     <div className={gameState === "spinning" ? "animate-bounce" : ""}>
                       <SymbolIcon symbol={symbol} isSpinning={gameState === "spinning"} />
@@ -286,7 +285,7 @@ export default function GamePage() {
                   {currentQuestion.category}
                 </div>
               </div>
-              <h3 className="text-lg font-bold text-balance mb-4">{currentQuestion.q}</h3>
+              <h3 className="text-lg font-bold text-balance mb-4 text-white">{currentQuestion.q}</h3>
             </div>
 
             {/* Options */}

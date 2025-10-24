@@ -109,7 +109,6 @@ export default function ShopPage() {
         <Header 
           title='Loja do Tigrinho'
           description='Use suas moedas aqui'
-          iconClass="bg-linear-to-br from-amber-400 to-orange-500"
         />
         
         <CoinsDisplay coins={coins} />
