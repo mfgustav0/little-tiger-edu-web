@@ -1,7 +1,7 @@
 import { Coins } from "lucide-react";
 
 interface Props {
-  coins: number
+  coins: number;
 }
 
 export function CoinsDisplay({ coins }: Props) {
@@ -14,5 +14,5 @@ export function CoinsDisplay({ coins }: Props) {
 
       <span className="text-2xl font-bold text-amber-400">{coins}</span>
     </div>
-  )
+  );
 }

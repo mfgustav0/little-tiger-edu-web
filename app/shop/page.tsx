@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { gameStore } from "@/lib/game-store";
-import { BottomNav } from "@/components/bottom-nav";
-import { CoinsDisplay } from "@/components/coins-display";
-import { Header } from "@/components/header";
+import { BottomNav } from "@/components/ui/bottom-nav";
+import { CoinsDisplay } from "@/components/ui/coins-display";
+import { Header } from "@/components/ui/header";
 import { ShopItemCard } from "@/components/shop/item-card";
 import { ShopSection } from "@/components/shop/section";
 import { SHOP_ITEMS } from "@/lib/shop-items";

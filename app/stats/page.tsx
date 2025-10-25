@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { TrendingUp, Target, Zap, Award } from "lucide-react";
-import { BottomNav } from "@/components/bottom-nav";
+import { BottomNav } from "@/components/ui/bottom-nav";
 import { gameStore } from "@/lib/game-store";
 import { getMascotById, ShopItemIcon } from "@/lib/shop-items";
 

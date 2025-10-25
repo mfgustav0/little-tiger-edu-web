@@ -29,7 +29,7 @@ export function Header({ title, description }: Props) {
 
     return <LucideIcon className="w-6 h-6 text-black" />;
   };
-  
+
   if (!mounted) {
     return null;
   }
