@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { TrendingUp, Target, Zap, Award } from "lucide-react";
 import { BottomNav } from "@/components/bottom-nav";
 import { gameStore } from "@/lib/game-store";
-import { Header } from "@/components/header";
+import { getMascotById, ShopItemIcon } from "@/lib/shop-items";
 
 export default function StatsPage() {
   const [stats, setStats] = useState({
@@ -18,6 +18,7 @@ export default function StatsPage() {
     streak: 0,
     bestStreak: 0,
   });
+  const [mascotIcon, setMascotIcon] = useState<ShopItemIcon>("");
 
   useEffect(() => {
     const data = gameStore.getData();
@@ -44,7 +45,7 @@ export default function StatsPage() {
   const getLevelColor = () => {
     if (stats.accuracy >= 80) return "text-amber-400";
     if (stats.accuracy >= 60) return "text-blue-400";
-    return "text-slate-400";
+    return "text-white";
   };
 
   const getLevelBg = () => {
@@ -55,22 +56,30 @@ export default function StatsPage() {
     return "from-slate-500/20 to-slate-600/20 border-slate-500/50";
   };
 
+  useEffect(() => {
+    const activeMascot = gameStore.getActiveMascot();
+    const mascot = getMascotById(activeMascot);
+
+    setMascotIcon(mascot.icon);
+  }, []);
+
+  const Icon = () => {
+    if (typeof mascotIcon === "string") {
+      return <span className="text-5xl">{mascotIcon}</span>;
+    }
+
+    const LucideIcon = mascotIcon;
+
+    return <LucideIcon className="size-12 text-black" />;
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-4 pb-28">
-      <div className="max-w-md mx-auto mb-6">
-        <Header
-          title="Estatísticas"
-          description="Seu progresso detalhado"
-        />
-      </div>
-
-      {/* Main Content */}
       <div className="max-w-md mx-auto space-y-4">
-        {/* Level Card */}
         <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-6">
           <div className="text-center space-y-4">
             <div className="w-20 h-20 mx-auto bg-linear-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-xl">
-              <span className="text-5xl">🐯</span>
+              <Icon />
             </div>
             <div>
               <div
@@ -80,7 +89,7 @@ export default function StatsPage() {
                   Nível: {stats.level}
                 </span>
               </div>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-white">
                 Continue jogando para evoluir!
               </p>
             </div>
@@ -92,12 +101,12 @@ export default function StatsPage() {
           <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
             <div className="flex items-center gap-2 mb-2">
               <Target className="w-5 h-5 text-green-400" />
-              <span className="text-xs text-slate-400">Acertos</span>
+              <span className="text-xs text-white">Acertos</span>
             </div>
             <p className="text-3xl font-bold text-green-400">
               {stats.correctAnswers}
             </p>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-white mt-1">
               de {stats.totalGames} perguntas
             </p>
           </Card>
@@ -105,38 +114,38 @@ export default function StatsPage() {
           <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-5 h-5 text-blue-400" />
-              <span className="text-xs text-slate-400">Precisão</span>
+              <span className="text-xs text-white">Precisão</span>
             </div>
             <p className="text-3xl font-bold text-blue-400">
               {stats.accuracy}%
             </p>
-            <p className="text-xs text-slate-500 mt-1">taxa de acerto</p>
+            <p className="text-xs text-white mt-1">taxa de acerto</p>
           </Card>
 
           <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="w-5 h-5 text-amber-400" />
-              <span className="text-xs text-slate-400">Sequência</span>
+              <span className="text-xs text-white">Sequência</span>
             </div>
             <p className="text-3xl font-bold text-amber-400">{stats.streak}</p>
-            <p className="text-xs text-slate-500 mt-1">acertos seguidos</p>
+            <p className="text-xs text-white mt-1">acertos seguidos</p>
           </Card>
 
           <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
             <div className="flex items-center gap-2 mb-2">
               <Award className="w-5 h-5 text-purple-400" />
-              <span className="text-xs text-slate-400">Recorde</span>
+              <span className="text-xs text-white">Recorde</span>
             </div>
             <p className="text-3xl font-bold text-purple-400">
               {stats.bestStreak}
             </p>
-            <p className="text-xs text-slate-500 mt-1">melhor sequência</p>
+            <p className="text-xs text-white mt-1">melhor sequência</p>
           </Card>
         </div>
 
         {/* Detailed Stats */}
         <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm p-5">
-          <h3 className="font-bold mb-4 flex items-center gap-2">
+          <h3 className="font-bold mb-4 flex items-center gap-2 text-white">
             <TrendingUp className="w-5 h-5 text-blue-400" />
             Desempenho Geral
           </h3>
@@ -144,7 +153,7 @@ export default function StatsPage() {
           <div className="space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-400">Acertos</span>
+                <span className="text-white">Acertos</span>
                 <span className="font-semibold text-green-400">
                   {stats.correctAnswers}
                 </span>
@@ -164,7 +173,7 @@ export default function StatsPage() {
 
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-400">Erros</span>
+                <span className="text-white">Erros</span>
                 <span className="font-semibold text-red-400">
                   {stats.wrongAnswers}
                 </span>
@@ -184,7 +193,7 @@ export default function StatsPage() {
 
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-slate-400">Precisão</span>
+                <span className="text-white">Precisão</span>
                 <span className="font-semibold text-blue-400">
                   {stats.accuracy}%
                 </span>
