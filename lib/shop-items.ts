@@ -1,16 +1,26 @@
-import { Sparkles, SkipForward, Palette, Coins } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+import {
+  Sparkles,
+  SkipForward,
+  Palette,
+  Coins,
+  Bug,
+  Bird,
+  Dog,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-export type ShopItemCategory = "power-up" | "cosmetic"
+export type ShopItemCategory = "power-up" | "cosmetic";
+
+export type ShopItemIcon = LucideIcon | string;
 
 export type ShopItem = {
-  id: string
-  name: string
-  description: string
-  cost: number
-  icon: LucideIcon
-  category: ShopItemCategory
-}
+  id: string;
+  name: string;
+  description: string;
+  cost: number;
+  icon: ShopItemIcon;
+  category: ShopItemCategory;
+};
 
 export const SHOP_ITEMS: ShopItem[] = [
   {
@@ -30,22 +40,38 @@ export const SHOP_ITEMS: ShopItem[] = [
     category: "power-up",
   },
   {
-    id: "theme-gold",
-    name: "Tema Dourado",
-    description: "Desbloqueie o tema visual dourado premium",
-    cost: 20,
-    icon: Palette,
+    id: "icon-default",
+    name: "Tiger",
+    description: "O mascote mais brabo",
+    cost: 0,
+    icon: "🐯",
     category: "cosmetic",
   },
   {
-    id: "theme-emerald",
-    name: "Tema Esmeralda",
-    description: "Desbloqueie o tema visual esmeralda premium",
+    id: "icon-dog",
+    name: "Dog",
+    description: "Desbloqueie o melhor amigo do homem",
     cost: 20,
-    icon: Palette,
+    icon: Dog,
     category: "cosmetic",
   },
-]
+  {
+    id: "icon-bird",
+    name: "Voa Voa",
+    description: "Desbloqueie a Ave",
+    cost: 20,
+    icon: Bird,
+    category: "cosmetic",
+  },
+  {
+    id: "icon-bug",
+    name: "Bug",
+    description: "Desbloqueie o problema de todos os dev's",
+    cost: 50,
+    icon: Bug,
+    category: "cosmetic",
+  },
+];
 
 export const CATEGORY_INFO = {
   "power-up": {
@@ -54,8 +80,19 @@ export const CATEGORY_INFO = {
     iconColor: "text-amber-400",
   },
   cosmetic: {
-    title: "Temas Visuais",
+    title: "Mascotes",
     icon: Palette,
     iconColor: "text-blue-400",
   },
-} as const
+} as const;
+
+export function getMascotById(mascotId: string): ShopItem {
+  const mascot = SHOP_ITEMS.find(
+    (item) => item.category === "cosmetic" && item.id === mascotId
+  );
+  if (!mascot) {
+    return SHOP_ITEMS.find((item) => item.id === "icon-default")!;
+  }
+
+  return mascot;
+}

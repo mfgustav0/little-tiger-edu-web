@@ -8,30 +8,45 @@ type GameData = {
   correctAnswers: number
   wrongAnswers: number
   powerUps: PowerUp[]
-  purchasedThemes: string[]
-  activeTheme: string
+  purchasedMascots: string[]
+  activeMascot: string
 }
 
 const DEFAULT_DATA: GameData = {
-  coins: 14,
+  coins: 15,
   correctAnswers: 0,
   wrongAnswers: 0,
   powerUps: [],
-  purchasedThemes: [],
-  activeTheme: "default",
+  purchasedMascots: [],
+  activeMascot: "icon-default",
 }
 
 export const gameStore = {
   getData(): GameData {
     if (typeof window === "undefined") return DEFAULT_DATA
     const stored = localStorage.getItem("tigrinho-game-data")
-    return stored ? JSON.parse(stored) : DEFAULT_DATA
+    if(!stored) return DEFAULT_DATA
+
+    const storedJson = JSON.parse(stored);
+
+    return {
+      coins: storedJson.coins ?? 0,
+      correctAnswers: storedJson.correctAnswers ?? 0,
+      wrongAnswers: storedJson.wrongAnswers ?? 0,
+      powerUps: storedJson.powerUps ?? [],
+      purchasedMascots: storedJson.purchasedMascots ?? [],
+      activeMascot: storedJson.activeMascot ?? "icon-default",
+    }
   },
 
   setData(data: Partial<GameData>) {
     if (typeof window === "undefined") return
     const current = this.getData()
-    const updated = { ...current, ...data }
+    const updated = { 
+      ...current,
+      ...data,
+      purchaseTheme: current.purchasedMascots ?? [], 
+    }
     localStorage.setItem("tigrinho-game-data", JSON.stringify(updated))
   },
 
@@ -79,17 +94,26 @@ export const gameStore = {
     return powerUp?.quantity || 0
   },
 
-  purchaseTheme(themeId: string) {
+  purchaseMascot(mascotId: string) {
     const data = this.getData()
-    if (!data.purchasedThemes.includes(themeId)) {
-      data.purchasedThemes.push(themeId)
-      this.setData({ purchasedThemes: data.purchasedThemes })
+    if (!data.purchasedMascots.includes(mascotId)) {
+      data.purchasedMascots.push(mascotId)
+      this.setData({ purchasedMascots: data.purchasedMascots })
     }
   },
 
-  hasTheme(themeId: string): boolean {
+  hasMascot(mascotId: string): boolean {
     const data = this.getData()
-    return data.purchasedThemes.includes(themeId)
+    return data.purchasedMascots.includes(mascotId)
+  },
+
+  setActiveMascot(mascotId: string) {
+    this.setData({ activeMascot: mascotId })
+  },
+
+  getActiveMascot(): string {
+    const data = this.getData()
+    return data.activeMascot
   },
 
   incrementCorrect() {

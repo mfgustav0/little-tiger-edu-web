@@ -6,15 +6,16 @@ import { gameStore } from "@/lib/game-store";
 import { BottomNav } from "@/components/bottom-nav";
 import { CoinsDisplay } from "@/components/coins-display";
 import { Header } from "@/components/header";
+import { ShopItemCard } from "@/components/shop/item-card";
+import { ShopSection } from "@/components/shop/section";
 import { SHOP_ITEMS } from "@/lib/shop-items";
 import type { ShopItem } from "@/lib/shop-items";
-import { ShopSection } from "@/components/shop/section";
-import { ShopItemCard } from "@/components/shop/item-card";
 
 export default function ShopPage() {
   const [coins, setCoins] = useState(0);
   const [powerUps, setPowerUps] = useState<{ [key: string]: number }>({});
-  const [purchasedThemes, setPurchasedThemes] = useState<string[]>([]);
+  const [purchasedMascots, setPurchasedMascots] = useState<string[]>([]);
+  const [activeTheme, setActiveMascot] = useState("default");
 
   useEffect(() => {
     refreshData();
@@ -29,7 +30,8 @@ export default function ShopPage() {
       powerUpMap[p.id] = p.quantity;
     });
     setPowerUps(powerUpMap);
-    setPurchasedThemes(data.purchasedThemes);
+    setPurchasedMascots(data.purchasedMascots);
+    setActiveMascot(data.activeMascot);
   };
 
   const handlePurchase = (item: ShopItem) => {
@@ -39,17 +41,29 @@ export default function ShopPage() {
       gameStore.removeCoins(item.cost);
       gameStore.addPowerUp(item.id);
     } else if (item.category === "cosmetic") {
-      if (!gameStore.hasTheme(item.id)) {
+      if (!gameStore.hasMascot(item.id)) {
         gameStore.removeCoins(item.cost);
-        gameStore.purchaseTheme(item.id);
+        gameStore.purchaseMascot(item.id);
       }
     }
 
     refreshData();
   };
 
+  const handleActivateMascot = (mascotId: string) => {
+    gameStore.setActiveMascot(mascotId);
+    setActiveMascot(mascotId);
+  };
+
   const isPurchased = (item: ShopItem) => {
-    return item.category === "cosmetic" && purchasedThemes.includes(item.id);
+    return (
+      (item.category === "cosmetic" && purchasedMascots.includes(item.id)) ||
+      item.id === "icon-default"
+    );
+  };
+
+  const isActive = (item: ShopItem) => {
+    return item.category === "cosmetic" && activeTheme === item.id;
   };
 
   const canAfford = (cost: number) => coins >= cost;
@@ -91,8 +105,10 @@ export default function ShopPage() {
               key={item.id}
               item={item}
               isPurchased={isPurchased(item)}
+              isActive={isActive(item)}
               canAfford={canAfford(item.cost)}
               onPurchase={() => handlePurchase(item)}
+              onActivateMascot={() => handleActivateMascot(item.id)}
             />
           ))}
         </ShopSection>
